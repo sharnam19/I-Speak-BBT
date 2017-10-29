@@ -8,20 +8,15 @@ data = json.load(open("processed.json","rb"))
 w2ix=data['w2ix']
 w2ix['<ZERO>']=0
 ix2w = { v:k for k,v in w2ix.items() }
-#print(ix2w)
 X  = np.array(data['ix_string'],dtype=np.int32)
 mask = (X!=0)
 mask = mask.astype(np.int32)
-#print(mask)
-#X = np.array(X)
-#X2 = np.array()
-#print(X)
-#print(X.shape)
+
 trainX  = X[:,:-1]
 trainY = X[:,1:]
 
 learning_rate = 1e-3
-epoch = 2
+epoch = 1000
 embed_dimension = 100
 hidden_dimension = 128
 batch_size = 5000
@@ -99,3 +94,13 @@ for e in range(epoch):
     generate_text('<RAJ>')
     generate_text('<PENNY>')
     print("Done Update")
+
+data = {}
+data['Wx']=Wx.tolist()
+data['Wh']=Wh.tolist()
+data['Wy']=Wy.tolist()
+data['bh']=bh.tolist()
+data['by']=by.tolist()
+data['Wembed']=Wembed.tolist()
+
+json.dump(data,open("model.json","wb"))
