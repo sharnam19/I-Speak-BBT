@@ -21,7 +21,7 @@ epoch = 1
 embed_dimension = 100
 hidden_dimension = 128
 batch_size = 5000
-vocab_size = len(w2ix.keys())+1
+vocab_size = len(w2ix.keys())
 bptt = 4
 forward = rnn_forward
 backward = rnn_backward
@@ -96,13 +96,9 @@ for e in range(epoch):
     generate_text('<RAJ>')
     generate_text('<PENNY>')
     print("Done Update")
-<<<<<<< HEAD
     sys.stdout.flush()
-    
-=======
 
 print(len(w2ix.keys()))
->>>>>>> 1fb6dcc52884bff27bc74644d190683e3310e6f3
 data = {}
 data['Wx']=Wx.tolist()
 data['Wh']=Wh.tolist()
