@@ -8,6 +8,7 @@ data = json.load(open("processed.json","rb"))
 w2ix=data['w2ix']
 w2ix['<ZERO>']=0
 ix2w = { v:k for k,v in w2ix.items() }
+print(ix2w.keys())
 X  = np.array(data['ix_string'],dtype=np.int32)
 mask = (X!=0)
 mask = mask.astype(np.int32)
@@ -16,7 +17,7 @@ trainX  = X[:,:-1]
 trainY = X[:,1:]
 
 learning_rate = 1e-3
-epoch = 1000
+epoch = 1
 embed_dimension = 100
 hidden_dimension = 128
 batch_size = 5000
@@ -48,7 +49,7 @@ def generate_text(character_num):
         Aout = hprev.dot(Wy)+by
         inputs[0,start_index+1] = np.argmax(Aout)
         sentence.append(ix2w[inputs[0,start_index+1]])
-        
+
     print(" ".join(sentence))
 
 generate_text('<SHELDON>')
@@ -87,7 +88,7 @@ for e in range(epoch):
             bh -= learning_rate*dbh
             Wy -= learning_rate*dWy
             by -= learning_rate*dby
-    
+
     generate_text('<SHELDON>')
     generate_text('<LEONARD>')
     generate_text('<HOWARD>')
@@ -95,6 +96,7 @@ for e in range(epoch):
     generate_text('<PENNY>')
     print("Done Update")
 
+print(len(w2ix.keys()))
 data = {}
 data['Wx']=Wx.tolist()
 data['Wh']=Wh.tolist()
