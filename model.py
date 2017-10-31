@@ -3,7 +3,7 @@ from sequential import *
 from layer import *
 from loss import *
 import json
-
+import sys
 data = json.load(open("processed.json","rb"))
 w2ix=data['w2ix']
 w2ix['<ZERO>']=0
@@ -50,6 +50,7 @@ def generate_text(character_num):
         sentence.append(ix2w[inputs[0,start_index+1]])
         
     print(" ".join(sentence))
+    sys.stdout.flush()
 
 generate_text('<SHELDON>')
 generate_text('<LEONARD>')
@@ -94,7 +95,8 @@ for e in range(epoch):
     generate_text('<RAJ>')
     generate_text('<PENNY>')
     print("Done Update")
-
+    sys.stdout.flush()
+    
 data = {}
 data['Wx']=Wx.tolist()
 data['Wh']=Wh.tolist()
